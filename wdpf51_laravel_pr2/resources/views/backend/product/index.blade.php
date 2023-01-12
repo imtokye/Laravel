@@ -133,6 +133,7 @@
                 <div class="card-inner">
                     <div class="nk-block-between-md g-3">
                         <div class="g">
+                            {{$products->links()}}
                             <ul class="pagination justify-content-center justify-content-md-start">
                                 <li class="page-item"><a class="page-link" href="#"><em class="icon ni ni-chevrons-left"></em></a></li>
                                 <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -188,7 +189,7 @@
         </div><!-- .nk-block-head -->
         <div class="nk-block">
             <div class="row g-3">
-                <form action="{{url('/products')}}" method="post">
+                <form id="productForm" action="{{url('/products')}}" method="post">
                     @csrf
                     <div class="col-12">
                         <div class="form-group">
@@ -246,7 +247,7 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Add New</span></button>
+                        <button type="button" id="addnew" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Add New</span></button>
                     </div>
                 </form>
             </div>

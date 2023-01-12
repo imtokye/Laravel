@@ -16,10 +16,12 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $products = Product::latest()->paginate(10);
+        $cats = Category::orderBy('cat_name', 'Asc')->get();
+        //$data['cats'] = Category::orderBy('cat_name', 'ASC')->get();
+        //$data['products'] = Product::orderBy('id', 'DESC')->get();
 
-        $data['cats'] = Category::orderBy('cat_name', 'ASC')->get();
-        $data['products'] = Product::orderBy('id', 'DESC')->get();
-        return view("backend.product.index", $data);
+        return view("backend.product.index", compact('products', 'cats'));
     }
 
     /**
@@ -40,15 +42,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = new Product();
-        $product->product_name = $request->product_name;
-        $product->product_details = $request->product_details;
-        $product->product_price = $request->product_price;
-        $product->product_image = $request->product_image;
-        $product->product_category = $request->product_category;
-        $product->product_stock = $request->product_stock;
-        $product->save();
-        return redirect("/products");
+        $request->validate([
+            'product_name' => 'required|min_length[3]'
+        ]);
+        if ($request->validate) {
+            Product::create($request->all());
+            return redirect("/products");
+        }
+
+        // $product = new Product();
+        // $product->product_name = $request->product_name;
+        // $product->product_details = $request->product_details;
+        // $product->product_price = $request->product_price;
+        // $product->product_image = $request->product_image;
+        // $product->product_category = $request->product_category;
+        // $product->product_stock = $request->product_stock;
+        // $product->save();
+
     }
 
     /**
